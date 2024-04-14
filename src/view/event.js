@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizeDate, getRandomArrayElement, getDateDifference, getRandomInteger } from '../utils.js';
+import { humanizeDate , getDateDifference } from '../utils/date-time.js';
+import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 
 function createSelectedOffersTemplate(offers) {
   return offers.map((offer) => `

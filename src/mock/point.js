@@ -1,4 +1,5 @@
-import { getRandomInteger, getRandomDate, getRandomArrayElement } from '../utils.js';
+import { getRandomInteger, getRandomArrayElement } from '../utils/common.js';
+import { getRandomDate } from '../utils/date-time.js';
 import { TYPES } from '../const.js';
 
 const generateOfferIds = (count) => Array.from({length: count}, () => crypto.randomUUID());

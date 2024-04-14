@@ -7,6 +7,7 @@ import { RenderPosition, render } from './framework/render.js';
 import PointsModel from './model/point-model.js';
 import DestinationsModel from './model/destination-model.js';
 import OffersModel from './model/offer-model.js';
+import { generateFilter } from './mock/filter.js';
 
 const siteHeaderElement = document.querySelector('.page-header');
 const mainElement = siteHeaderElement.querySelector('.trip-main');
@@ -24,7 +25,10 @@ const presenter = new Presenter({
   offersModel
 });
 
+
+const filters = generateFilter(pointsModel.points);
+
+render(new Filter({ filters }), filtersElement);
 render(new Info(), mainElement, RenderPosition.AFTERBEGIN);
-render(new Filter(), filtersElement);
 
 presenter.init();

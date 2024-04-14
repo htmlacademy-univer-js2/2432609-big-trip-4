@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 
-const getRandomInteger = (start, end) => Math.floor(Math.random() * (end - start + 1) + start);
-
-const getRandomArrayElement = (items) => items[getRandomInteger(0, items.length - 1)];
+import { getRandomInteger } from './common';
 
 const humanizeDate = (date, dateFormat) => date ? dayjs(date).format(dateFormat) : '';
 
@@ -21,8 +19,8 @@ const getDateDifference = (dateFrom, dateTo) => {
   }
 };
 
-const getRandomDate = (date = new Date()) => dayjs(date).add(getRandomInteger(30, 1500), 'minute');
+const getRandomDate = (date = new Date(0)) => dayjs(date).add(getRandomInteger(30, 1500), 'minute');
 
-export { getRandomInteger, getRandomArrayElement, humanizeDate, getDateDifference, getRandomDate };
+export { getRandomInteger, humanizeDate, getDateDifference, getRandomDate };
 
 // Path: src/utils.js
