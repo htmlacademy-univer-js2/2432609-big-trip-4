@@ -3,6 +3,8 @@ import EditForm from '../view/edit-form.js';
 import EventList from '../view/event-list.js';
 import Event from '../view/event.js';
 import Sort from '../view/sort.js';
+import EmptyList from '../view/empty.js';
+import { filter } from '../utils/filter.js';
 
 
 export default class Presenter {
@@ -16,6 +18,7 @@ export default class Presenter {
 
   #pointsListComponent = new EventList();
   #sortingComponent = new Sort();
+  #emptyListComponent = new EmptyList();
 
   constructor({ routeContainer, pointsModel, destinationsModel, offersModel }) {
     this.#routeContainer = routeContainer;
@@ -28,10 +31,17 @@ export default class Presenter {
     this.#routePoint = [...this.#pointModel.points];
     this.#destinations = [...this.#destinationsModel.destinations];
 
+    if (this.#routePoint.length === 0) {
+      render(this.#emptyListComponent, this.#routeContainer);
+      return;
+    }
+
     render(this.#sortingComponent, this.#routeContainer);
     render(this.#pointsListComponent, this.#routeContainer);
 
-    for (let i = 1; i < this.#routePoint.length; i++) {
+    this.#routePoint = filter.past(this.#routePoint);
+
+    for (let i = 0; i < this.#routePoint.length; i++) {
       this.#renderPoint(this.#routePoint[i]);
     }
   }

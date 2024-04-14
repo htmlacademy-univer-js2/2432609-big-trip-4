@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizeDate, getRandomArrayElement, getRandomInteger } from '../utils.js';
+import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
+import { humanizeDate } from '../utils/date-time.js';
 
 const EMPTY_POINT = {
   id: '',
