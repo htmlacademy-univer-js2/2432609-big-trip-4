@@ -15,7 +15,7 @@ const DESCRIPTIONS = [
 ];
 const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
-const POINT_COUNT = 4;
+const POINT_COUNT = 5;
 
 export {TYPES, CITIES, DESCRIPTIONS, POINT_COUNT, OFFERS};
 

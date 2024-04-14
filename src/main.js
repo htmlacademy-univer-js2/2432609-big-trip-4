@@ -2,7 +2,7 @@ import Filter from './view/filter.js';
 import Info from './view/info.js';
 import Presenter from './presenter/presenter.js';
 
-import { RenderPosition, render } from './render.js';
+import { RenderPosition, render } from './framework/render.js';
 
 import PointsModel from './model/point-model.js';
 import DestinationsModel from './model/destination-model.js';
