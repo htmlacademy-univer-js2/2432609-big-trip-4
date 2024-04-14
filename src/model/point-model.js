@@ -1,23 +1,16 @@
-import { getRandomInteger, getRandomDate, getRandomArrayElement } from '../utils.js';
-import { TYPES } from '../const.js';
+import { POINT_COUNT } from '../const.js';
+import { generatePoint } from '../mock/point.js';
 
-const generateOfferIds = (count) => Array.from({length: count}, () => crypto.randomUUID());
+export default class PointsModel {
+  constructor() {
+    this.points = this.generatePoints();
+  }
 
-const PointModel = () => {
-  const date = getRandomDate();
+  generatePoints() {
+    return Array.from({length: POINT_COUNT}, () => generatePoint());
+  }
 
-  return {
-    id: crypto.randomUUID(),
-    basePrice: getRandomInteger(500, 2500),
-    dateFrom: date,
-    dateTo: getRandomDate(date),
-    destination: crypto.randomUUID(),
-    isFavorite: Boolean(getRandomInteger(0, 1)),
-    offers: generateOfferIds(getRandomInteger(0, 5)),
-    type: getRandomArrayElement(TYPES)
-  };
-};
-
-export default PointModel;
-
-// Path: src/model/point-model.js
+  get() {
+    return this.points;
+  }
+}

@@ -1,16 +1,15 @@
 import { generateDestination } from '../mock/destination';
 
 export default class DestinationsModel {
-  constructor(destinationsCount = 3) {
-    this.destinations = Array.from({length: destinationsCount}, generateDestination);
+  constructor() {
+    this.destinations = Array.from({length: 3}, () => generateDestination());
   }
 
-  getAll() {
+  get() {
     return this.destinations;
   }
 
-  findById(id) {
+  getById(id) {
     return this.destinations.find((destination) => destination.id === id);
   }
 }
-// Path: src/model/point-model.js
