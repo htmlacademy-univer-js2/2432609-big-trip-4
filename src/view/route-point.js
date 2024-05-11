@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizeDate , getDateDifference } from '../utils/date-time.js';
+import { getDuration, formatToShortDate, formatToShortTime } from '../utils/date-time.js';
 import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 
 function createSelectedOffersTemplate(offers) {
@@ -12,14 +12,12 @@ function createSelectedOffersTemplate(offers) {
   ` : ''}`).join('');
 }
 
-const DATE_FORMAT = 'YYYY-MM-DD';
-const TIME_FORMAT = 'HH:mm';
-
 function createRoutePointTemplate({ point, destinations, offers }) {
-  const timeFrom = humanizeDate(point.dateFrom, TIME_FORMAT);
-  const timeTo = humanizeDate(point.dateTo, TIME_FORMAT);
-  const duration = getDateDifference(point.dateFrom, point.dateTo);
-  const date = humanizeDate(point.dateFrom, DATE_FORMAT);
+
+  const timeFrom = formatToShortTime(point.dateFrom);
+  const timeTo = formatToShortTime(point.dateTo);
+  const duration = getDuration(point.dateFrom, point.dateTo);
+  const date = formatToShortDate(point.dateFrom);
   const isActiveClassName = point.isFavorite ? 'event__favorite-btn--active' : '';
 
   const destination = getRandomArrayElement(destinations);
@@ -66,17 +64,23 @@ export default class RoutePointView extends AbstractView {
   #point = null;
   #destinations = null;
   #offers = null;
-  #handleEditClick = null;
 
-  constructor({ point, destinations, offers, onEditClick }) {
+  #handleEditClick = null;
+  #handleFavoriteClick = null;
+
+  constructor({ point, destinations, offers, onEditClick, onFavoriteClick }) {
     super();
     this.#point = point;
     this.#destinations = destinations;
     this.#offers = offers;
     this.#handleEditClick = onEditClick;
+    this.#handleFavoriteClick = onFavoriteClick;
 
     this.element.querySelector('.event__rollup-btn')
       .addEventListener('click', this.#editClickHandler);
+
+    this.element.querySelector('.event__favorite-btn')
+      .addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
@@ -90,5 +94,10 @@ export default class RoutePointView extends AbstractView {
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleEditClick();
+  };
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFavoriteClick();
   };
 }

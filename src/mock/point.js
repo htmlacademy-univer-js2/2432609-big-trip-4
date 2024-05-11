@@ -1,22 +1,20 @@
-import { getRandomInteger, getRandomArrayElement } from '../utils/common.js';
-import { getRandomDate } from '../utils/date-time.js';
+import { getRandomInteger, getRandomArrayElement} from '../utils/common.js';
+import { humanizeTaskDueDate, getDate } from '../utils/date-time.js';
 import { TYPES } from '../const.js';
 
 const generateOfferIds = (count) => Array.from({length: count}, () => crypto.randomUUID());
 
-const generatePoint = () => {
-  const date = getRandomDate();
-
-  return {
+const generatePoint = () => (
+  {
     id: crypto.randomUUID(),
     basePrice: getRandomInteger(500, 2500),
-    dateFrom: date,
-    dateTo: getRandomDate(date),
+    dateFrom: humanizeTaskDueDate(getDate(false)),
+    dateTo: humanizeTaskDueDate(getDate(true)),
     destination: crypto.randomUUID(),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     offers: generateOfferIds(getRandomInteger(0, 5)),
     type: getRandomArrayElement(TYPES)
-  };
-};
+  }
+);
 
 export { generatePoint };

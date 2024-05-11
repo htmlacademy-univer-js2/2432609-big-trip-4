@@ -1,6 +1,6 @@
 import Filter from './view/filter.js';
 import Info from './view/info.js';
-import RoutePresenter from './presenter/-route-presenter.js';
+import RoutePresenter from './presenter/route-presenter.js';
 
 import { RenderPosition, render } from './framework/render.js';
 

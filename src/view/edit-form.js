@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 import { humanizeDate } from '../utils/date-time.js';
+import { CITIES } from '../const.js';
 
 const EMPTY_POINT = {
   id: '',
@@ -11,6 +12,14 @@ const EMPTY_POINT = {
   isFavorite: false,
   offers: [],
   type: 'flight'
+};
+
+const createDestinationList = () => {
+  let result = '';
+
+  CITIES.forEach((city) => (result += `<option value="${city.name}"></option>`));
+
+  return result;
 };
 
 function createPhotosTemplate(pictures) {
@@ -92,9 +101,7 @@ function createEditingFormTemplate({ point, destinations, offerItem }) {
         </label>
         <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination.name}" list="destination-list-1">
         <datalist id="destination-list-1">
-          <option value="Amsterdam"></option>
-          <option value="Geneva"></option>
-          <option value="Chamonix"></option>
+        ${createDestinationList(destination)}
         </datalist>
       </div>
 

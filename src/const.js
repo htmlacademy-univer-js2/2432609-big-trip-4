@@ -1,5 +1,5 @@
 const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
-const CITIES = ['Amsterdam', 'Tokio', 'Kioto', 'Osaka'];
+const CITIES = ['Alubarna', 'Tokio', 'Kioto', 'Osaka', 'Konohagakure', 'Magnolia', 'Reole'];
 const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
@@ -15,9 +15,24 @@ const DESCRIPTIONS = [
 ];
 const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
+const Duration = {
+  MIN: 60,
+  HOUR: 10,
+  DAY: 3
+};
+
+const DateFormat = {
+  LONG: 'YYYY-MM-DDTHH:mm',
+  SHORT: 'MMM DD'
+};
+
 const POINT_COUNT = 5;
 
-export {TYPES, CITIES, DESCRIPTIONS, POINT_COUNT, OFFERS};
+const MODE = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING'
+};
 
-// Path: src/model/point-model.js
+export {TYPES, CITIES, DESCRIPTIONS, POINT_COUNT, OFFERS, MODE, Duration, DateFormat};
+
 
