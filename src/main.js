@@ -1,6 +1,6 @@
 import Filter from './view/filter.js';
 import Info from './view/info.js';
-import Presenter from './presenter/presenter.js';
+import RoutePresenter from './presenter/-route-presenter.js';
 
 import { RenderPosition, render } from './framework/render.js';
 
@@ -18,7 +18,7 @@ const destinationsModel = new DestinationsModel();
 const offersModel = new OffersModel();
 const pointsModel = new PointsModel();
 
-const presenter = new Presenter({
+const presenter = new RoutePresenter({
   routeContainer: eventsElement,
   pointsModel,
   destinationsModel,
