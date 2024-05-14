@@ -4,12 +4,12 @@ import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 
 function createSelectedOffersTemplate(offers) {
   return offers.map((offer) => `
-  ${getRandomInteger(0, 1) ? `<li class="event__offer">
-    <span class="event__offer-title">${offer.title}</span>
-    &plus;&euro;&nbsp;
-    <span class="event__offer-price">${offer.price}</span>
-  </li>
-  ` : ''}`).join('');
+    <li class="event__offer">
+      <span class="event__offer-title">${offer.title}</span>
+      &plus;&euro;&nbsp;
+      <span class="event__offer-price">${offer.price}</span>
+    </li>
+  `).join('');
 }
 
 function createRoutePointTemplate({ point, destinations, offers }) {
