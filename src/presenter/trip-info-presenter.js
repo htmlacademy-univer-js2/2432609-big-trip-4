@@ -4,6 +4,8 @@ import SortingView from '../view/sort.js';
 import PointPresenter from './point-presenter.js';
 import { render, RenderPosition } from '../framework/render.js';
 import { updateItem } from '../utils/common.js';
+import { SortType } from '../const.js';
+import { sortByTime, sortByPrice, sortByDay } from '../utils/date-time.js';
 
 export default class TripInfoPresenter {
   #eventsList = null;
@@ -15,6 +17,9 @@ export default class TripInfoPresenter {
   #tripEvents = [];
 
   #destinations = null;
+  #currentSortType = SortType.DAY;
+  #sourcedPoints = [];
+
 
   #noEventsComponent = new NoEventsView();
   #sortingComponent = new SortingView();
@@ -26,8 +31,12 @@ export default class TripInfoPresenter {
   init (tripContainer, pointsModel, destinationsModel) {
     this.#tripContainer = tripContainer;
     this.#pointsModel = pointsModel;
-    this.#points = [...this.#pointsModel.points];
     this.#destinations = destinationsModel.destinations;
+
+    const pointsSortedByDefault = [...this.#pointsModel.points].sort(sortByDay);
+
+    this.#points = pointsSortedByDefault;
+    this.#sourcedPoints = pointsSortedByDefault;
 
     if(this.#points.length === 0){
       this.#renderNoEvents();
@@ -54,6 +63,32 @@ export default class TripInfoPresenter {
     }
   };
 
+  #sortEvents = (sortType) => {
+    switch (sortType){
+      case SortType.PRICE:
+        this.#points.sort(sortByPrice);
+        break;
+      case SortType.TIME:
+        this.#points.sort(sortByTime);
+        break;
+      default:
+        this.#points.sort(sortByDay);
+    }
+
+    this.#currentSortType = sortType;
+  };
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortEvents(sortType);
+
+    this.#clearEventsList();
+    this.#renderPoints();
+  };
+
   #handlePointChange = (updatedPoint) => {
     this.#tripEvents = updateItem(this.#tripEvents, updatedPoint);
     this.#eventsPresenter.get(updatedPoint.id).init(updatedPoint, this.#destinations);
@@ -74,6 +109,7 @@ export default class TripInfoPresenter {
 
   #renderSort = () => {
     render(this.#sortingComponent, this.#tripContainer, RenderPosition.AFTERBEGIN);
+    this.#sortingComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
   };
 
   #renderNoEvents = () => {

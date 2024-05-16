@@ -1,8 +1,8 @@
-const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-const CITIES = ['Alubarna', 'Tokio', 'Kioto', 'Osaka', 'Konohagakure', 'Magnolia', 'Reole'];
+export const CITIES = ['Alubarna', 'Tokio', 'Kioto', 'Osaka', 'Konohagakure', 'Magnolia', 'Reole'];
 
-const DESCRIPTIONS = [
+export const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
   'Fusce tristique felis at fermentum pharetra.',
@@ -16,54 +16,56 @@ const DESCRIPTIONS = [
   'In rutrum ac purus sit amet tempus.'
 ];
 
-const PicturesInfo = {
+export const PicturesInfo = {
   COUNT: 5,
   SRC: 100,
 };
 
-const Price = {
+export const Price = {
   MIN: 100,
   MAX: 500
 };
 
-const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
+export const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
-const Duration = {
+export const Duration = {
   MIN: 60,
   HOUR: 10,
   DAY: 3
 };
 
-const DateFormat = {
+export const DateFormat = {
   LONG: 'YYYY-MM-DDTHH:mm',
   SHORT: 'MMM DD'
 };
 
-const OffersCount = {
+export const OffersCount = {
   MIN: 0,
   MAX: 6
 };
 
-const FilterType = {
+export const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PAST: 'past',
 };
 
-const PICTURE_DISCRIPTIONS = [
+export const PICTURE_DISCRIPTIONS = [
   'Nice place',
   'Ugly building',
   'Pretty picture',
   'Ancient city',
 ];
 
-const POINTS_COUNT = 5;
+export const POINTS_COUNT = 5;
 
-const MODE = {
+export const MODE = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING'
 };
 
-export {TYPES, CITIES, DESCRIPTIONS, POINTS_COUNT, OFFERS, MODE, Duration, DateFormat, Price, OffersCount, FilterType, PicturesInfo, PICTURE_DISCRIPTIONS};
-
-
+export const SortType = {
+  DAY: 'day',
+  TIME: 'time',
+  PRICE: 'price',
+};
