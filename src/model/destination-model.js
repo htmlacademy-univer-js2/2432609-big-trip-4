@@ -1,13 +1,12 @@
 import { generateDestination } from '../mock/destination';
+import { CITIES } from '../const';
 
-export default class DestinationsModel {
-  #destinations = Array.from({length: 3}, () => generateDestination());
+export default class DestinationModel{
+  #destinations = null;
 
-  get destinations() {
-    return this.#destinations;
+  constructor (){
+    this.#destinations = Array.from({length: CITIES.length},(value, index) => generateDestination(index));
   }
 
-  getById(id) {
-    return this.#destinations.find((destination) => destination.id === id);
-  }
+  get destinations () {return this.#destinations;}
 }

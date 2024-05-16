@@ -1,22 +1,23 @@
-import { getRandomInteger, getRandomArrayElement } from '../utils/common.js';
-import { getRandomDate } from '../utils/date-time.js';
-import { TYPES } from '../const.js';
+import { getRandomNumber, getRandomElement } from '../utils/common.js';
+import { generateOffersByType } from './offer.js';
+import { TYPES, Price, CITIES} from '../const.js';
+import { generateDate } from './date.js';
+import {nanoid} from 'nanoid';
+import { generateDestination } from './destination';
 
-const generateOfferIds = (count) => Array.from({length: count}, () => crypto.randomUUID());
+export const generatePoint = () => {
+  const type = getRandomElement(TYPES);
+  const dateFrom = generateDate();
+  const destinations = Array.from({length: CITIES.length}, (value, index) => generateDestination(index));
 
-const generatePoint = () => {
-  const date = getRandomDate();
-
-  return {
-    id: crypto.randomUUID(),
-    basePrice: getRandomInteger(500, 2500),
-    dateFrom: date,
-    dateTo: getRandomDate(date),
-    destination: crypto.randomUUID(),
-    isFavorite: Boolean(getRandomInteger(0, 1)),
-    offers: generateOfferIds(getRandomInteger(0, 5)),
-    type: getRandomArrayElement(TYPES)
-  };
+  return ({
+    'basePrice': getRandomNumber(Price.MIN, Price.MAX),
+    dateFrom,
+    'dateTo': generateDate(dateFrom),
+    'destination': getRandomElement(destinations).id,
+    'id': nanoid(),
+    'isFavourite': Boolean(getRandomNumber(0,1)),
+    'offers': generateOffersByType(type),
+    type,
+  });
 };
-
-export { generatePoint };

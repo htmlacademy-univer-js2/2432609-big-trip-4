@@ -1,26 +1,38 @@
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
-import { getRandomInteger } from './common';
+dayjs.extend(duration);
 
-const humanizeDate = (date, dateFormat) => date ? dayjs(date).format(dateFormat) : '';
+const humanizeDate = (date) => dayjs(date).format('D MMMM');
 
-const getDateDifference = (dateFrom, dateTo) => {
-  const differenceInMinutes = dayjs(dateTo).diff(dayjs(dateFrom), 'minute');
-  const days = Math.floor(differenceInMinutes / (60 * 24));
-  const hours = Math.floor((differenceInMinutes - days * 60 * 24) / 60);
-  const minutes = differenceInMinutes - days * 60 * 24 - hours * 60;
+const humanizeTime = (date) => dayjs(date).format('HH:mm');
 
-  if (days > 0) {
-    return `${days}[D] ${hours}[H] ${minutes}[M]`;
-  } else if (hours > 0) {
-    return `${hours}[H] ${minutes}[M]`;
-  } else {
-    return `${minutes}[M]`;
+const getEventDuration = (dateFrom, dateTo) => {
+  const timeParts = dayjs.duration(dayjs(dateTo).diff(dateFrom)).
+    format('DD HH mm').
+    split(' ');
+
+  const days = timeParts[0];
+  const hours = timeParts[1];
+
+  let eventDuration = `${timeParts[2]}M`;
+
+  if (hours !== '00' || (hours === '00' && days !== '00')){
+    eventDuration = `${hours}H ${eventDuration}`;
   }
+
+  if (days !== '00' ){
+    eventDuration = `${days}D ${eventDuration}`;
+  }
+
+  return eventDuration;
 };
 
-const getRandomDate = (date = new Date(0)) => dayjs(date).add(getRandomInteger(30, 1500), 'minute');
+const humanizeFormDate = (date) => dayjs(date).format('DD/MM/YY HH:mm');
 
-export { getRandomInteger, humanizeDate, getDateDifference, getRandomDate };
+const isPastPoint = (point) => dayjs(point.dateFrom).isBefore(dayjs());
 
-// Path: src/utils.js
+const isFuturePoint = (point) => dayjs(point.dateFrom).isAfter(dayjs());
+
+export{ humanizeDate, humanizeTime, humanizeFormDate, getEventDuration,
+  isPastPoint, isFuturePoint };

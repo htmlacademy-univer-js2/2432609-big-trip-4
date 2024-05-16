@@ -1,8 +1,10 @@
-const filter = {
-  everything: (points) => points,
-  future: (points) => points.filter((point) => point.dateFrom > new Date()),
-  present: (points) => points.filter((point) => point.dateFrom <= new Date() && point.dateTo >= new Date()),
-  past: (points) => points.filter((point) => point.dateTo < new Date())
+import { FilterType } from '../const';
+import { isFuturePoint, isPastPoint } from './date-time';
+
+const filterPoints = {
+  [FilterType.EVERYTHING]: (points) => Array.from(points),
+  [FilterType.FUTURE]: (points) => Array.from(points).filter((point) => isFuturePoint(point)),
+  [FilterType.PAST]: (points) => Array.from(points).filter((point) => isPastPoint(point))
 };
 
-export { filter };
+export { filterPoints };

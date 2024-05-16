@@ -1,28 +1,11 @@
-import { TYPES } from '../const.js';
-import { getRandomInteger } from '../utils/common.js';
-import { generateOffer } from '../mock/offer.js';
+import { generateEditingForm } from '../mock/edit-form';
 
-export default class OffersModel {
-  #allOffers = TYPES.map((type) => ({
-    type,
-    offers: Array.from({ length: getRandomInteger(0, 5) }, () => generateOffer())
-  }));
+export default class OfferModel{
+  #form = null;
 
-  get allOffers() {
-    return this.#allOffers;
+  constructor (){
+    this.#form = generateEditingForm();
   }
 
-  getByType(type) {
-    return this.#allOffers.find((offer) => offer.type === type);
-  }
-
-  getById(id) {
-    this.#allOffers.forEach((item) => {
-      const res = item.offers.find((offer) => offer.id === id);
-      if (res) {
-        return res;
-      }
-    });
-    return {};
-  }
+  get form () { return this.#form;}
 }
