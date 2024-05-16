@@ -6,6 +6,4 @@ const generatePicture = () => ({
   'description': getRandomElement(PICTURE_DISCRIPTIONS),
 });
 
-export const generatePictures = () => {
-  return Array.from({length: PicturesInfo.COUNT}, generatePicture);
-};
+export const generatePictures = () => Array.from({length: PicturesInfo.COUNT}, generatePicture);

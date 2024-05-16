@@ -36,5 +36,3 @@ const isFuturePoint = (point) => dayjs(point.dateFrom).isAfter(dayjs());
 
 export{ humanizeDate, humanizeTime, humanizeFormDate, getEventDuration,
   isPastPoint, isFuturePoint };
-
-  //point.js

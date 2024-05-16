@@ -49,7 +49,7 @@ const getAvailableDestinations = (destinations) => {
 
 const getDestinationsList = (thisDestination, destinations, type) => {
   const destinationsByType = destinations.find((item) => item.type === type);
-  const allDestinatioins = destinationsByType? destinationsByType : destinations;
+  const allDestinatioins = destinationsByType ? destinationsByType : destinations;
 
   return(
     `<div class="event__field-group  event__field-group--destination">
@@ -68,8 +68,8 @@ const createPictures = (pictures) => {
 
   let photos = '';
 
-  pictures.forEach((pictures) => {
-    photos += `<img class="event__photo" src='${pictures.src}' alt='Event photo'></img>`;
+  pictures.forEach((picture) => {
+    photos += `<img class="event__photo" src='${picture.src}' alt='Event photo'></img>`;
   });
 
   return (
