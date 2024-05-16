@@ -1,60 +1,40 @@
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
-import { getRandomInteger } from './common';
-import { Duration, DateFormat } from '../const';
-
-const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
 
-const humanizeDate = (date, dateFormat = "DD/MM/YY HH:mm") => date ? dayjs(date).format(dateFormat) : '';
+const humanizeDate = (date) => dayjs(date).format('D MMMM');
 
-const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
+const humanizeTime = (date) => dayjs(date).format('HH:mm');
 
-const humanizeTaskDueDate = (dueDate) => dueDate ? dayjs(dueDate).format(DateFormat.LONG) : '';
+const getEventDuration = (dateFrom, dateTo) => {
+  const timeParts = dayjs.duration(dayjs(dateTo).diff(dateFrom)).
+    format('DD HH mm').
+    split(' ');
 
-const getRandomIntegerFromRange = (start, end) => Math.ceil(Math.random() * (end - start + 1)) + start - 1;
+  const days = timeParts[0];
+  const hours = timeParts[1];
 
-const formatToDateTime = (dueDate) => dueDate ? dayjs(dueDate).format(DateFormat.LONG) : '';
+  let eventDuration = `${timeParts[2]}M`;
 
-const formatToShortDate = (time) => time ? dayjs(time).format(DateFormat.SHORT) : '';
-
-const formatToShortTime = (time) => time ? dayjs(time).format('HH:mm') : '';
-
-const getDate = (add) => {
-  let date = dayjs().subtract(getRandomIntegerFromRange(0, Duration.DAY), 'day').toDate();
-  
-  const mins = getRandomIntegerFromRange(0, Duration.MIN);
-  const hours = getRandomIntegerFromRange(0, Duration.HOUR);
-  const days = getRandomIntegerFromRange(0, Duration.DAY);
-  
-  if (add) {
-    date = dayjs(date)
-      .add(mins, 'minute')
-      .add(hours, 'hour')
-      .add(days, 'days')
-      .toDate();
+  if (hours !== '00' || (hours === '00' && days !== '00')){
+    eventDuration = `${hours}H ${eventDuration}`;
   }
-  
-    return date;
-  };
 
-  const getDuration = (dateFrom, dateTo) => {
-    const timeDifference = dayjs(dateTo).diff(dayjs(dateFrom));
-  
-    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-    if (days > 0) {
-      return `${days}D ${hours}H ${minutes}M`;
-    } else if (hours > 0) {
-      return `${hours}H ${minutes}M`;
-    } else {
-      return `${minutes}M`;
-    }
-  };
+  if (days !== '00' ){
+    eventDuration = `${days}D ${eventDuration}`;
+  }
 
-const getRandomDate = (date = new Date(0)) => dayjs(date).add(getRandomInteger(30, 1500), 'minute');
+  return eventDuration;
+};
 
-export { getRandomInteger, getDate, humanizeDate, getRandomArrayElement, humanizeTaskDueDate, getRandomIntegerFromRange, formatToDateTime, formatToShortDate, formatToShortTime, getDuration, getRandomDate };
+const humanizeFormDate = (date) => dayjs(date).format('DD/MM/YY HH:mm');
 
+const isPastPoint = (point) => dayjs(point.dateFrom).isBefore(dayjs());
+
+const isFuturePoint = (point) => dayjs(point.dateFrom).isAfter(dayjs());
+
+export{ humanizeDate, humanizeTime, humanizeFormDate, getEventDuration,
+  isPastPoint, isFuturePoint };
+
+  //point.js

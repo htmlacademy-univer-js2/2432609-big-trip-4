@@ -1,14 +1,30 @@
-function getRandomArrayElement(array) {
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
+const getRandomNumber = (start, end) => {
+  start = Math.min(start,end);
+  end = Math.max(start, end);
 
-function getRandomInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+  return Math.round(Math.random()* (end - start) + start);
+};
 
-function updateItem(items, update) {
-  return items.map((item) => item.id === update.id ? update : item);
-}
+const getRandomElement = (elements) => {
+  const randomIndex = getRandomNumber(0, elements.length - 1);
 
-export { getRandomArrayElement, getRandomInteger, updateItem };
+  return elements[randomIndex];
+};
+
+const onEscape = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+const updateItem = (items, update) => {
+  const index = items.findIndex((item) => item.id === update.id);
+
+  if (index === -1) {
+    return items;
+  }
+
+  return [
+    ...items.slice(0, index),
+    update,
+    ...items.slice(index + 1),
+  ];
+};
+
+export {getRandomNumber, getRandomElement, onEscape, updateItem};

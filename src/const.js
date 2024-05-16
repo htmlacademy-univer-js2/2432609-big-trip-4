@@ -1,5 +1,7 @@
 const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+
 const CITIES = ['Alubarna', 'Tokio', 'Kioto', 'Osaka', 'Konohagakure', 'Magnolia', 'Reole'];
+
 const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
@@ -13,6 +15,17 @@ const DESCRIPTIONS = [
   'Nunc fermentum tortor ac porta dapibus.',
   'In rutrum ac purus sit amet tempus.'
 ];
+
+const PicturesInfo = {
+  COUNT: 5,
+  SRC: 100,
+};
+
+const Price = {
+  MIN: 100,
+  MAX: 500
+};
+
 const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
 const Duration = {
@@ -26,13 +39,31 @@ const DateFormat = {
   SHORT: 'MMM DD'
 };
 
-const POINT_COUNT = 5;
+const OffersCount = {
+  MIN: 0,
+  MAX: 6
+};
+
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PAST: 'past',
+};
+
+const PICTURE_DISCRIPTIONS = [
+  'Nice place',
+  'Ugly building',
+  'Pretty picture',
+  'Ancient city',
+];
+
+const POINTS_COUNT = 5;
 
 const MODE = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING'
 };
 
-export {TYPES, CITIES, DESCRIPTIONS, POINT_COUNT, OFFERS, MODE, Duration, DateFormat};
+export {TYPES, CITIES, DESCRIPTIONS, POINTS_COUNT, OFFERS, MODE, Duration, DateFormat, Price, OffersCount, FilterType, PicturesInfo, PICTURE_DISCRIPTIONS};
 
 
