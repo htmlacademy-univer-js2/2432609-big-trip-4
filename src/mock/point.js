@@ -1,23 +1,28 @@
-import { getRandomNumber, getRandomElement } from '../utils/common.js';
-import { generateOffersByType } from './offer.js';
-import { TYPES, Price, CITIES} from '../const.js';
-import { generateDate } from './date.js';
-import {nanoid} from 'nanoid';
-import { generateDestination } from './destination';
+import {getRandomInteger, getRandomItem, getRandomIntegerFromRange} from '../utils/common';
+import { humanizeTaskDueDate, getDate } from '../utils/point';
+import { Price } from '../const';
+import {destinations} from './destinations';
+import {getOffersByType} from './offers';
+
+const generateFavorite = () => {
+  const g = getRandomInteger(1,2);
+  return g === 1;
+};
+
+const offersByType = getOffersByType();
 
 export const generatePoint = () => {
-  const type = getRandomElement(TYPES);
-  const dateFrom = generateDate();
-  const destinations = Array.from({length: CITIES.length}, (value, index) => generateDestination(index));
-
-  return ({
-    'basePrice': getRandomNumber(Price.MIN, Price.MAX),
-    dateFrom,
-    'dateTo': generateDate(dateFrom),
-    'destination': getRandomElement(destinations).id,
-    'id': nanoid(),
-    'isFavourite': Boolean(getRandomNumber(0,1)),
-    'offers': generateOffersByType(type),
-    type,
-  });
+  const offersByTypePoint = getRandomItem(offersByType);
+  const allOfferIdsByTypePoint = offersByTypePoint.offers.map((offer) => offer.id);
+  return {
+    id: crypto.randomUUID(),
+    destinationId: getRandomItem(destinations).id,
+    startDate: humanizeTaskDueDate(getDate(false)),
+    endDate: humanizeTaskDueDate(getDate(true)),
+    price: getRandomIntegerFromRange(Price.MIN, Price.MAX),
+    isFavorite: generateFavorite(),
+    arrayOffersIds: Array.from({length: getRandomInteger(0, allOfferIdsByTypePoint.length)}).map(() =>
+      allOfferIdsByTypePoint[getRandomInteger(0, allOfferIdsByTypePoint.length - 1)]),
+    type: offersByTypePoint.type
+  };
 };

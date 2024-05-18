@@ -1,32 +1,26 @@
 export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-export const CITIES = ['Alubarna', 'Tokio', 'Kioto', 'Osaka', 'Konohagakure', 'Magnolia', 'Reole'];
+export const OFFERS = [
+  'Add luggage',
+  'Switch to comfort class',
+  'Add meal',
+  'Choose seats',
+  'Add a child safety seat'
+];
+
+export const CITIES = ['Magnolia', 'Greed Island', 'Soul Society', 'Amestris', 'Death City', 'Karakura', 'Z-City', 'Alubarna', 'Aincrad'];
 
 export const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Fusce tristique felis at fermentum pharetra.',
-  'Aliquam id orci ut lectus varius viverra.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
+  'Maecenas dapibus sed enim in ultrices.',
+  'Praesent non ex turpis.',
+  'Nunc mollis sed tortor a faucibus.',
+  'Morbi ac convallis erat, vel volutpat nisl.',
+  'Phasellus a interdum lacus. Aenean consectetur magna vel diam fringilla, at commodo sem placerat.',
+  'Etiam a pellentesque massa.',
   'Sed sed nisi sed augue convallis suscipit in sed felis.',
-  'Aliquam erat volutpat.',
-  'Nunc fermentum tortor ac porta dapibus.',
-  'In rutrum ac purus sit amet tempus.'
+  'Aliquam erat volutpat.'
 ];
-
-export const PicturesInfo = {
-  COUNT: 5,
-  SRC: 100,
-};
-
-export const Price = {
-  MIN: 100,
-  MAX: 500
-};
-
-export const OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
 export const Duration = {
   MIN: 60,
@@ -39,33 +33,16 @@ export const DateFormat = {
   SHORT: 'MMM DD'
 };
 
-export const OffersCount = {
+export const Price = {
   MIN: 0,
-  MAX: 6
+  MAX: 1000
 };
 
-export const FilterType = {
-  EVERYTHING: 'everything',
-  FUTURE: 'future',
-  PAST: 'past',
-};
+export const MILLISECONDS_IN_DAY = 86400000;
 
-export const PICTURE_DISCRIPTIONS = [
-  'Nice place',
-  'Ugly building',
-  'Pretty picture',
-  'Ancient city',
-];
+export const MILLISECONDS_IN_HOUR = 3600000;
 
-export const POINTS_COUNT = 5;
-
-export const MODE = {
+export const Mode = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING'
-};
-
-export const SortType = {
-  DAY: 'day',
-  TIME: 'time',
-  PRICE: 'price',
 };
