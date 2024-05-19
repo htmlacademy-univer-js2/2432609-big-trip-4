@@ -1,7 +1,7 @@
 import PointView from '../view/point-view';
-import EditPointView from '../view/edit-point-view';
+import EditingPointView from '../view/edit-point-view';
 import {remove, render, replace} from '../framework/render';
-import { Mode } from '../const';
+import {UpdateType, UserAction, Mode} from '../const';
 
 export default class PointPresenter{
   #pointListContainer = null;
@@ -12,19 +12,23 @@ export default class PointPresenter{
   #point = null;
   #mode = Mode.DEFAULT;
   #pointsModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
   #destinations = null;
   #offers = null;
-  constructor({pointListContainer, pointsModel, onFavoriteChange, onModeChange}) {
+  constructor({pointListContainer, pointsModel, destinationsModel, offersModel, onFavoriteChange, onModeChange}) {
     this.#pointListContainer = pointListContainer;
     this.#handleFavoriteChange = onFavoriteChange;
     this.#handleModeChange = onModeChange;
     this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
   }
 
   init = (point) => {
     this.#point = point;
-    this.#destinations = [...this.#pointsModel.destinations];
-    this.#offers = [...this.#pointsModel.offers];
+    this.#destinations = [...this.#destinationsModel.destinations];
+    this.#offers = [...this.#offersModel.offers];
 
     const prevPointComponent = this.#pointComponent;
     const prevEditPointComponent = this.#editPointComponent;
@@ -36,9 +40,10 @@ export default class PointPresenter{
       destinations: this.#destinations,
       offers: this.#offers
     });
-    this.#editPointComponent = new EditPointView({
+    this.#editPointComponent = new EditingPointView({
       point: this.#point,
       onFormSubmit: this.#handleSubmitForm,
+      onDeleteClick: this.#handleDeleteClick,
       destinations: this.#destinations,
       offers: this.#offers
     });
@@ -94,16 +99,30 @@ export default class PointPresenter{
   };
 
   #handleFavoriteClick = () => {
-    this.#handleFavoriteChange({...this.#point, isFavorite: !this.#point.isFavorite});
+    this.#handleFavoriteChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      {...this.#point, isFavorite: !this.#point.isFavorite});
   };
 
   #handleEditClick = () => {
     this.#replacePointToEditPoint();
   };
 
-  #handleSubmitForm = (point) => {
-    this.#handleFavoriteChange(point);
+  #handleSubmitForm = (update) => {
+    this.#handleFavoriteChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      update);
     this.#editPointComponent.reset(this.#point);
     this.#replaceEditPointToPoint();
+  };
+
+  #handleDeleteClick = (point) => {
+    this.#handleFavoriteChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
   };
 }
