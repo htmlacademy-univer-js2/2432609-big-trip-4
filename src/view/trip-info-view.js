@@ -13,19 +13,19 @@ const getTotalAmount = (points) => {
 const getTripTitle = (points, destinations, startPoint, endPoint) => {
   switch(points.length) {
     case 1:
-      return destinations[startPoint.destinationId].city;
+      return destinations[startPoint.destination].name;
 
     case 2:
-      return `${destinations[startPoint.destinationId].city} &mdash; ${destinations[endPoint.destinationId].city}`;
+      return `${destinations[startPoint.destination].name} &mdash; ${destinations[endPoint.destination].name}`;
 
     case 3:
-      return `${destinations[startPoint.destinationId].city} &mdash;
+      return `${destinations[startPoint.destination].name} &mdash;
       ${destinations[points.find(
-    (point) => point.id !== startPoint.id && point.id !== endPoint.id).destinationId].city} &mdash;
-    ${destinations[endPoint.destinationId].city}`;
+    (point) => point.id !== startPoint.id && point.id !== endPoint.id).destination].name} &mdash;
+    ${destinations[endPoint.destination].name}`;
 
     default:
-      return `${destinations[startPoint.destinationId].city} &mdash; . . . &mdash; ${destinations[endPoint.destinationId].city}`;
+      return `${destinations[startPoint.destination].name} &mdash; . . . &mdash; ${destinations[endPoint.destination].name}`;
   }
 };
 
