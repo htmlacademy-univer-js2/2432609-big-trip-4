@@ -58,7 +58,6 @@ export default class NewPointPresenter {
     this.#pointEditComponent.shake(resetFormState);
   }
 
-
   destroy() {
     if (this.#pointEditComponent === null) {
       return;
@@ -78,7 +77,6 @@ export default class NewPointPresenter {
       UpdateType.MINOR,
       point
     );
-    this.destroy();
   };
 
   #handleDeleteClick = () => {

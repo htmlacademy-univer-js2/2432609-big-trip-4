@@ -1,15 +1,12 @@
-
 import {render, replace, remove} from '../framework/render.js';
 import FilterView from '../view/filter-view.js';
 import {filterByType} from '../utils/filter.js';
-import {FILTERTYPE} from '../utils/filter.js';
-import {UpdateType} from '../const';
+import {FilterType, UpdateType} from '../const';
 
 export default class FilterPresenter {
   #filterContainer = null;
   #filterModel = null;
   #pointsModel = null;
-
   #filterComponent = null;
 
   constructor({filterContainer, filterModel, pointsModel}) {
@@ -21,31 +18,9 @@ export default class FilterPresenter {
     this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
-  get filters() {
-    const points = this.#pointsModel.points;
-
-    return [
-      {
-        type: FILTERTYPE.EVERYTHING,
-        name: 'EVERYTHING',
-        count: filterByType[FILTERTYPE.EVERYTHING](points).length,
-      },
-      {
-        type: FILTERTYPE.PAST,
-        name: 'PAST',
-        count: filterByType[FILTERTYPE.PAST](points).length,
-      },
-      {
-        type: FILTERTYPE.FUTURE,
-        name: 'FUTURE',
-        count: filterByType[FILTERTYPE.FUTURE](points).length,
-      }
-    ];
-  }
-
   init() {
     const filters = this.filters;
-    const prevFilterComponent = this.#filterComponent;
+    const previousFilterComponent = this.#filterComponent;
 
     this.#filterComponent = new FilterView({
       filters,
@@ -53,13 +28,35 @@ export default class FilterPresenter {
       onFilterTypeChange: this.#handleFilterTypeChange
     });
 
-    if (prevFilterComponent === null) {
+    if (previousFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
       return;
     }
 
-    replace(this.#filterComponent, prevFilterComponent);
-    remove(prevFilterComponent);
+    replace(this.#filterComponent, previousFilterComponent);
+    remove(previousFilterComponent);
+  }
+
+  get filters() {
+    const points = this.#pointsModel.points;
+
+    return [
+      {
+        type: FilterType.EVERYTHING,
+        name: 'EVERYTHING',
+        count: filterByType[FilterType.EVERYTHING](points).length,
+      },
+      {
+        type: FilterType.PAST,
+        name: 'PAST',
+        count: filterByType[FilterType.PAST](points).length,
+      },
+      {
+        type: FilterType.FUTURE,
+        name: 'FUTURE',
+        count: filterByType[FilterType.FUTURE](points).length,
+      }
+    ];
   }
 
   #handleModelEvent = () => {

@@ -1,7 +1,7 @@
-import {UpdateType} from '../const';
 import Observable from '../framework/observable';
+import {UpdateType} from '../const';
 
-export default class DestinationsModel extends Observable{
+export default class DestinationModel extends Observable{
   #destinationsApiService = null;
   #destinations = [];
   constructor({destinationsApiService}) {

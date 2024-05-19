@@ -1,32 +1,31 @@
 import {calculateDuration, humanizePointDate} from '../utils/point';
 import AbstractView from '../framework/view/abstract-view';
 
-
 const createOffersTemplates = (allOffers, checkedOffers) => {
   let result = '';
   allOffers.forEach((offer) => {
     if (checkedOffers.includes(offer.id)) {
-      result = `${result}<li class="event__offer"><span class="event__offer-title">${offer.title}</span>&plus;&euro;&nbsp;<span class="event__offer-price">${offer.price}</span></li>`;
+      result += `<li class="event__offer"><span class="event__offer-title">${offer.title}</span>&plus;&euro;&nbsp;<span class="event__offer-price">${offer.price}</span></li>`;
     }
   });
   return result;
 };
 
-export const Point = (point, destinations, arrayOffersIds) => {
+export const pointView = (point, destinations, offersIds) => {
   const {type, destination, startDate, endDate, price, isFavorite, offers} = point;
-  const dateFrom = startDate !== null ? humanizePointDate(startDate, 'HH:mm') : '';
-  const dateTo = endDate !== null ? humanizePointDate(endDate, 'HH:mm') : '';
-  const date = startDate !== null ? humanizePointDate(startDate, 'MMMM D') : '';
-  const allTypeOffers = arrayOffersIds.find((offer) => offer.type === type);
+  const dateFrom = startDate !== null ? humanizePointDate(startDate, 'DD/MM/YY HH:mm') : '';
+  const dateTo = endDate !== null ? humanizePointDate(endDate, 'DD/MM/YY HH:mm') : '';
+  const date = startDate !== null ? humanizePointDate(startDate, 'D MMMM') : '';
+  const allTypeOffers = offersIds.find((offer) => offer.type === type);
   const favoriteClass = isFavorite ? 'event__favorite-btn--active' : '';
-  const destinationInf = destinations.find((dest) => dest.id === destination);
+  const destinationData = destinations.find((dest) => dest.id === destination);
   return(`<li class="trip-events__item">
         <div class="event">
           <time class="event__date" dateTime="2019-03-18">${date}</time>
           <div class="event__type">
             <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
           </div>
-          <h3 class="event__title">${type} ${destinationInf.name}</h3>
+          <h3 class="event__title">${type} ${destinationData.name}</h3>
           <div class="event__schedule">
             <p class="event__time">
               <time class="event__start-time" dateTime="2019-03-18T10:30">${dateFrom}</time>
@@ -75,7 +74,7 @@ export default class PointView extends AbstractView{
   }
 
   get template(){
-    return Point(this.#point, this.#destinations, this.#offers);
+    return pointView(this.#point, this.#destinations, this.#offers);
   }
 
   #editClickHandler = (event) => {
