@@ -9,18 +9,18 @@ import he from 'he';
 
 const BLANK_POINT = {
   type: TYPES[0],
-  destinationId: 0,
+  destination: 0,
   startDate: dayjs(),
   endDate: dayjs(),
   price: 0,
   isFavorite: false,
-  arrayOffersIds: []
+  offers: []
 };
 
 const generateDestinations = (destinations) => {
   let destinationsTemplate = '';
   destinations.forEach((destination) => {
-    destinationsTemplate += `<option value="${destination.city}"></option>`;
+    destinationsTemplate += `<option value="${destination.name}"></option>`;
   });
   return destinationsTemplate;
 };
@@ -65,11 +65,12 @@ const createPhotosTemplates = (destPhotos) => {
   return photosTemplates;
 };
 
-export const editingPoint = (point, destinations, offers, isNewPoint) => {
-  const {type, destinationId, startDate, endDate, price, arrayOffersIds} = point;
+export const editingPoint = (point, destinations, arrayOffersIds, isNewPoint) => {
+  const {type, destination, startDate, endDate, price, offers} = point;
   const dateFrom = startDate !== null ? humanizePointDate(startDate, 'DD/MM/YY HH:mm') : '';
   const dateTo = endDate !== null ? humanizePointDate(endDate, 'DD/MM/YY HH:mm') : '';
-  const allTypeOffers = offers.find((offer) => offer.type === type);
+  const allTypeOffers = arrayOffersIds.find((offer) => offer.type === type);
+  const destinationInf = destinations.find((dest) => dest.id === destination);
   return(`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -89,10 +90,10 @@ export const editingPoint = (point, destinations, offers, isNewPoint) => {
                   </div>
 
                   <div class="event__field-group  event__field-group--destination">
-                    <label class="event__label  event__type-output" for="event-destination-${destinationId}">
+                  <label class="event__label  event__type-output" for="event-destination-${destination}">
                       ${type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-${destinationId}" type="text" name="event-destination" value="${he.encode(destinations[destinationId].city)}" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-${destination}" type="text" name="event-destination" value="${he.encode(destinationInf.name)}" list="destination-list-1">
                     <datalist id="destination-list-1">
                      ${generateDestinations(destinations)}
                     </datalist>
@@ -126,16 +127,16 @@ export const editingPoint = (point, destinations, offers, isNewPoint) => {
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
                     <div class="event__available-offers">
-                       ${createOffersTemplates(allTypeOffers.offers, arrayOffersIds)}
+                    ${createOffersTemplates(allTypeOffers.offers, offers)}
                     </div>
                   </section>
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">${destinations[destinationId].description}</p>
+                    <p class="event__destination-description">${destinationInf.description}</p>
                      <div class="event__photos-container">
                      <div class="event__photos-tape">
-                     ${createPhotosTemplates(destinations[destinationId].photos)}
+                     ${createPhotosTemplates(destinationInf.pictures)}
                     </div>
                     </div>
                   </section>
@@ -183,29 +184,21 @@ export default class EditingPointView extends AbstractStatefulView{
     this.#handleFormSubmit(EditingPointView.parseStateToPoint(this._state));
   };
 
-  #deleteClickHandler = (event) => {
-    event.preventDefault();
-    this.#handleDeleteClick(EditingPointView.parseStateToPoint(this._state));
-  };
-
   #editClickHandler = (event) => {
     event.preventDefault();
     this.#handleEditClick(this.#point);
+  };
+
+  #deleteClickHandler = (event) => {
+    event.preventDefault();
+    this.#handleDeleteClick(EditingPointView.parseStateToPoint(this._state));
   };
 
   #changeTypeHandler = (event) => {
     event.preventDefault();
     this.updateElement({
       type: event.target.value,
-      arrayOffersIds: []
-    });
-  };
-
-  #changeDestinationHandler = (event) => {
-    event.preventDefault();
-    const destination = this.#destinations.filter((dest) => dest.city === event.target.value);
-    this.updateElement({
-      destinationId: destination[0].id,
+      offers: []
     });
   };
 
@@ -224,23 +217,30 @@ export default class EditingPointView extends AbstractStatefulView{
   #ChangePriceHandler = (event) => {
     event.preventDefault();
     this.updateElement({
-      price: event.target.value
+      price: Number(event.target.value)
     });
   };
 
+  #changeDestinationHandler = (event) => {
+    event.preventDefault();
+    const destination = this.#destinations.find((dest) => dest.name === event.target.value);
+    this.updateElement({
+      destination: destination.id,
+    });
+  };
 
   #changeOfferHandler = (event) => {
     event.preventDefault();
     const offerId = Number(event.target.id.slice(-1));
-    const arrayOffersIds = this._state.arrayOffersIds.filter((n) => n !== offerId);
-    let currentOfferIds = [...this._state.arrayOffersIds];
-    if (arrayOffersIds.length !== this._state.arrayOffersIds.length) {
+    const arrayOffersIds = this._state.offers.filter((n) => n !== offerId);
+    let currentOfferIds = [...this._state.offers];
+    if (arrayOffersIds.length !== this._state.offers.length) {
       currentOfferIds = arrayOffersIds;
     } else {
       currentOfferIds.push(offerId);
     }
     this._setState({
-      arrayOffersIds: currentOfferIds,
+      offers: currentOfferIds,
     });
   };
 

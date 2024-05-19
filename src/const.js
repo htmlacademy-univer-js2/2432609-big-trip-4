@@ -55,8 +55,13 @@ export const UserAction = {
 
 export const UpdateType = {
   PATCH: 'PATCH',
-  MINOR: 'MINOR',
-  MAJOR: 'MAJOR'
+  MAJOR: 'MAJOR',
+  INIT: 'INIT'
 };
 
 export const POINT_COUNT_PER_STEP = 7;
+
+export const ApiServiceMethod = {
+  GET: 'GET',
+  PUT: 'PUT',
+};

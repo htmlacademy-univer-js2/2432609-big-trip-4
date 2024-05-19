@@ -6,8 +6,9 @@ import NoPointView from '../view/no-point-view';
 import PointPresenter from './point-presenter';
 import {sortPointsByType, SortType} from '../utils/common';
 import {filterByType, FILTERTYPE} from '../utils/filter';
-import {UpdateType, UserAction, POINT_COUNT_PER_STEP} from '../const';
+import {UpdateType, UserAction} from '../const';
 import NewPointPresenter from './new-point-presenter';
+import LoadingView from '../view/loading-view';
 
 class TripPresenter{
   #container = null;
@@ -16,13 +17,14 @@ class TripPresenter{
   #offersModel = null;
   #filtersModel = null;
   #component = new TripList();
+  #loadingComponent = new LoadingView();
   #sortComponent = null;
   #noPoint = null;
   #pointPresenter = new Map();
   #newPointPresenter = null;
   #currentSortType = SortType.DEFAULT;
   #filterType = FILTERTYPE.EVERYTHING;
-  #renderedPointCount = POINT_COUNT_PER_STEP;
+  #isLoading = true;
   constructor({container, pointsModel, destinationsModel, offersModel, filtersModel, onNewPointDestroy}) {
     this.#container = container;
     this.#pointsModel = pointsModel;
@@ -99,6 +101,11 @@ class TripPresenter{
         this.#clearBoard({resetSortType: true});
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
     }
   };
 
@@ -125,6 +132,7 @@ class TripPresenter{
     this.#pointPresenter.clear();
 
     remove(this.#sortComponent);
+    remove(this.#loadingComponent);
 
     if (this.#noPoint) {
       remove(this.#noPoint);
@@ -152,6 +160,10 @@ class TripPresenter{
     points.forEach((point) => this.#renderPoint(point));
   }
 
+  #renderLoading(){
+    render(this.#loadingComponent, this.#container, RenderPosition.AFTERBEGIN);
+  }
+
   #renderNoPoints() {
     this.#noPoint = new NoPointView({
       filterType: this.#filterType
@@ -162,8 +174,12 @@ class TripPresenter{
   #renderBoard() {
     const points = this.points;
     const pointsCount = points.length;
-    if(pointsCount === 0) {
+    if(pointsCount === 0 && !this.#isLoading) {
       this.#renderNoPoints();
+      return;
+    }
+    if(this.#isLoading) {
+      this.#renderLoading();
       return;
     }
     this.#renderSort();
