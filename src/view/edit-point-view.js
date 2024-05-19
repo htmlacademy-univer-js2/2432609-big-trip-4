@@ -59,20 +59,20 @@ const createTypesTemplates = (currentType, isDisabled) => {
   return typesTemplates;
 };
 
-const createPhotosTemplates = (destPhotos) => {
+const createPhotosTemplates = (destinationPhotos) => {
   let photosTemplates = '';
-  if (destPhotos !== ''){
-    photosTemplates = destPhotos.map((photo) => (`<img class="event__photo" src="${photo.src}" alt="${photo.description}">`)).join('');
+  if (destinationPhotos !== ''){
+    photosTemplates = destinationPhotos.map((photo) => (`<img class="event__photo" src="${photo.src}" alt="${photo.description}">`)).join('');
   }
   return photosTemplates;
 };
 
-export const editingPoint = (point, destinations, arrayOffersIds, isNewPoint) => {
+export const editingPointView = (point, destinations, offersIds, isNewPoint) => {
   const {type, destination, startDate, endDate, price, offers, isSaving, isDeleting, isDisabled} = point;
   const dateFrom = startDate !== null ? humanizePointDate(startDate, 'DD/MM/YY HH:mm') : '';
   const dateTo = endDate !== null ? humanizePointDate(endDate, 'DD/MM/YY HH:mm') : '';
-  const allTypeOffers = arrayOffersIds.find((offer) => offer.type === type);
-  const destinationInf = destinations.find((dest) => dest.id === destination);
+  const allTypeOffers = offersIds.find((offer) => offer.type === type);
+  const destinationData = destinations.find((dest) => dest.id === destination);
   return(`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -92,11 +92,11 @@ export const editingPoint = (point, destinations, arrayOffersIds, isNewPoint) =>
                   </div>
 
                   <div class="event__field-group  event__field-group--destination">
-                  <label class="event__label  event__type-output" for="event-destination-${destination}">
+                    <label class="event__label  event__type-output" for="event-destination-${destination}">
                       ${type}
                     </label>
                     <input class="event__input  event__input--destination" id="event-destination-${destination}"
-                    type="text" name="event-destination" value="${he.encode(destinationInf.name)}"
+                    type="text" name="event-destination" value="${he.encode(destinationData.name)}"
                     list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
                     <datalist id="destination-list-1" ${isDisabled ? 'disabled' : ''}>
                      ${generateDestinations(destinations, isDisabled)}
@@ -134,16 +134,16 @@ export const editingPoint = (point, destinations, arrayOffersIds, isNewPoint) =>
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
                     <div class="event__available-offers">
-                    ${createOffersTemplates(allTypeOffers.offers, offers, isDisabled)}
+                       ${createOffersTemplates(allTypeOffers.offers, offers, isDisabled)}
                     </div>
                   </section>
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">${destinationInf.description}</p>
+                    <p class="event__destination-description">${destinationData.description}</p>
                      <div class="event__photos-container">
                      <div class="event__photos-tape">
-                     ${createPhotosTemplates(destinationInf.pictures)}
+                     ${createPhotosTemplates(destinationData.pictures)}
                     </div>
                     </div>
                   </section>
@@ -183,7 +183,7 @@ export default class EditingPointView extends AbstractStatefulView{
   }
 
   get template(){
-    return editingPoint(this._state, this.#destinations, this.#offers, this.#isNewPoint);
+    return editingPointView(this._state, this.#destinations, this.#offers, this.#isNewPoint);
   }
 
   #formSubmitHandler = (event) => {
@@ -318,4 +318,3 @@ export default class EditingPointView extends AbstractStatefulView{
     this.#setEndDatepicker();
   }
 }
-
