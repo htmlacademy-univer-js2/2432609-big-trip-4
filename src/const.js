@@ -64,4 +64,11 @@ export const POINT_COUNT_PER_STEP = 7;
 export const ApiServiceMethod = {
   GET: 'GET',
   PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
+};
+
+export const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
 };
