@@ -19,4 +19,3 @@ export default class NoPointView extends AbstractView {
   }
 }
 
-

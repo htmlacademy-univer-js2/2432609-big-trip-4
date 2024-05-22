@@ -88,10 +88,10 @@ export const SortType = {
 };
 
 export const NoPointsTextType = {
-  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
-  [FilterType.PAST]: 'There are no past events now',
-  [FilterType.PRESENT]: 'There are no present events now',
-  [FilterType.FUTURE]: 'There are no future events now'
+  [FilterType.EVERYTHING]: 'click new event to create your first point',
+  [FilterType.PAST]: 'there are no past events now',
+  [FilterType.PRESENT]: 'there are no present events now',
+  [FilterType.FUTURE]: 'there are no future events now'
 };
 
 export const Mode = {

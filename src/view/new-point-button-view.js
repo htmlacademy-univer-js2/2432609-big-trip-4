@@ -17,5 +17,13 @@ export default class NewPointButtonView extends AbstractView {
   #clickHandler = (event) => {
     event.preventDefault();
     this.#handleClick();
+    this.#hideNoPointsText();
+  };
+
+  #hideNoPointsText = () => {
+    const noPointsTextElement = document.querySelector('.trip-events__msg');
+    if (noPointsTextElement) {
+      noPointsTextElement.style.display = 'none';
+    }
   };
 }
