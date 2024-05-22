@@ -13,9 +13,9 @@ const createOffersTemplates = (allOffers, checkedOffers) => {
 
 export const pointView = (point, destinations, offersIds) => {
   const {type, destination, startDate, endDate, price, isFavorite, offers} = point;
-  const dateFrom = startDate !== null ? humanizePointDate(startDate, 'DD/MM/YY HH:mm') : '';
-  const dateTo = endDate !== null ? humanizePointDate(endDate, 'DD/MM/YY HH:mm') : '';
-  const date = startDate !== null ? humanizePointDate(startDate, 'D MMMM') : '';
+  const dateFrom = startDate !== null ? humanizePointDate(startDate, 'HH:mm') : '';
+  const dateTo = endDate !== null ? humanizePointDate(endDate, 'HH:mm') : '';
+  const date = startDate !== null ? humanizePointDate(startDate, 'MMM D') : '';
   const allTypeOffers = offersIds.find((offer) => offer.type === type);
   const favoriteClass = isFavorite ? 'event__favorite-btn--active' : '';
   const destinationData = destinations.find((dest) => dest.id === destination);
