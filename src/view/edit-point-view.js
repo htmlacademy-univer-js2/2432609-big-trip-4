@@ -238,17 +238,18 @@ export default class EditingPointView extends AbstractStatefulView{
 
   #changeOfferHandler = (event) => {
     event.preventDefault();
-    const offerId = Number(event.target.id.slice(-1));
-    const arrayOffersIds = this._state.offers.filter((n) => n !== offerId);
-    let currentOfferIds = [...this._state.offers];
-    if (arrayOffersIds.length !== this._state.offers.length) {
-      currentOfferIds = arrayOffersIds;
+    const offerId = event.target.id.replace('event-offer-', '');
+    const newOffers = [...this._state.offers];
+    const offerIndex = newOffers.findIndex((id) => id === offerId);
+    if (offerIndex > -1) {
+      newOffers.splice(offerIndex, 1);
     } else {
-      currentOfferIds.push(offerId);
+      newOffers.push(offerId);
     }
     this._setState({
-      offers: currentOfferIds,
+      offers: newOffers,
     });
+    this.updateElement(this._state);
   };
 
   #setStartDatepicker() {
