@@ -77,6 +77,7 @@ export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-
 export const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
+  PRESENT: 'present',
   PAST: 'past'
 };
 
@@ -89,6 +90,7 @@ export const SortType = {
 export const NoPointsTextType = {
   [FilterType.EVERYTHING]: 'Click New Event to create your first point',
   [FilterType.PAST]: 'There are no past events now',
+  [FilterType.PRESENT]: 'There are no present events now',
   [FilterType.FUTURE]: 'There are no future events now'
 };
 
