@@ -96,7 +96,7 @@ export const editingPointView = (point, destinations, offersIds, isNewPoint) => 
                       ${type}
                     </label>
                     <input class="event__input  event__input--destination" id="event-destination-${destination}"
-                    type="text" name="event-destination" value="${he.encode(destinationData.name)}"
+                    type="text" name="event-destination" value="${destinationData ? he.encode(destinationData.name) : ''}"
                     list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
                     <datalist id="destination-list-1" ${isDisabled ? 'disabled' : ''}>
                      ${generateDestinations(destinations, isDisabled)}
@@ -138,7 +138,7 @@ export const editingPointView = (point, destinations, offersIds, isNewPoint) => 
                     </div>
                   </section>
 
-                  <section class="event__section  event__section--destination">
+                  ${destinationData ? `<section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
                     <p class="event__destination-description">${destinationData.description}</p>
                      <div class="event__photos-container">
@@ -146,7 +146,7 @@ export const editingPointView = (point, destinations, offersIds, isNewPoint) => 
                      ${createPhotosTemplates(destinationData.pictures)}
                     </div>
                     </div>
-                  </section>
+                    </section>` : ''}
                 </section>
               </form>
   </li>`
@@ -238,17 +238,18 @@ export default class EditingPointView extends AbstractStatefulView{
 
   #changeOfferHandler = (event) => {
     event.preventDefault();
-    const offerId = Number(event.target.id.slice(-1));
-    const arrayOffersIds = this._state.offers.filter((n) => n !== offerId);
-    let currentOfferIds = [...this._state.offers];
-    if (arrayOffersIds.length !== this._state.offers.length) {
-      currentOfferIds = arrayOffersIds;
+    const offerId = event.target.id.replace('event-offer-', '');
+    const newOffers = [...this._state.offers];
+    const offerIndex = newOffers.findIndex((id) => id === offerId);
+    if (offerIndex > -1) {
+      newOffers.splice(offerIndex, 1);
     } else {
-      currentOfferIds.push(offerId);
+      newOffers.push(offerId);
     }
     this._setState({
-      offers: currentOfferIds,
+      offers: newOffers,
     });
+    this.updateElement(this._state);
   };
 
   #setStartDatepicker() {

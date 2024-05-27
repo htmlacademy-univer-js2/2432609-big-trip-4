@@ -10,7 +10,7 @@ import PointsApiService from './api-service/points-api';
 import DestinationsApiService from './api-service/destinations-api';
 import OffersApiService from './api-service/offers-api';
 
-const AUTHORIZATION = 'Basic RsgQy3KcnM';
+const AUTHORIZATION = 'Basic hs0NCvhAEP';
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const tripContainer = document.querySelector('.trip-events');

@@ -23,12 +23,12 @@ export const calculateDuration = (startDate, endDate) => {
   return `${differenceMinutes}M`;
 };
 
-export const sortPointTime = (pointA, pointB) => dayjs(pointA.endDate).diff(dayjs(pointA.startDate)) - dayjs(pointB.endDate).diff(dayjs(pointB.startDate));
+export const sortPointTime = (pointA, pointB) => dayjs(pointB.endDate).diff(dayjs(pointB.startDate)) - dayjs(pointA.endDate).diff(dayjs(pointA.startDate));
 
 export const sortPointDay = (pointA, pointB) => {
   const dateFromDifference = dayjs(pointA.startDate).diff(dayjs(pointB.startDate));
   return dateFromDifference === 0 ? dayjs(pointB.endDate).diff(dayjs(pointA.endDate)) : dateFromDifference;
 };
 
-export const sortPointPrice = (pointA, pointB) => pointA.price - pointB.price;
+export const sortPointPrice = (pointA, pointB) => pointB.price - pointA.price;
 

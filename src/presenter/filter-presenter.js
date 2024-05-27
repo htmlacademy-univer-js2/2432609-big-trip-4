@@ -52,6 +52,11 @@ export default class FilterPresenter {
         count: filterByType[FilterType.PAST](points).length,
       },
       {
+        type: FilterType.PRESENT,
+        name: 'PRESENT',
+        count: filterByType[FilterType.PRESENT](points).length,
+      },
+      {
         type: FilterType.FUTURE,
         name: 'FUTURE',
         count: filterByType[FilterType.FUTURE](points).length,
