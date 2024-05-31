@@ -200,9 +200,7 @@ class TripPresenter {
       this.#renderLoading();
       return;
     }
-    if (this.#filterType === FilterType.EVERYTHING) {
-      this.#renderTripInfo();
-    }
+    this.#renderTripInfo();
     this.#renderSort();
     render(this.#component, this.#container);
     this.#renderPoints(points);
