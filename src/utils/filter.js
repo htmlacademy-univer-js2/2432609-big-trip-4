@@ -1,21 +1,17 @@
 import dayjs from 'dayjs';
 import {FilterType} from '../const';
 
-const filterByPast = (date, param) => dayjs().isAfter(dayjs(date), param);
-
-const filterByFuture = (date, param) => dayjs().isBefore(dayjs(date), param) || dayjs().isSame(dayjs(date), param);
+const filterByPast = (date) => dayjs().isAfter(dayjs(date), 'day');
+const filterByFuture = (date) => dayjs(date).isAfter(dayjs(), 'day');
 
 export const filterByType = {
   [FilterType.EVERYTHING]: (points) => points,
-  [FilterType.FUTURE]: (points) => points.filter((point) => filterByFuture(point.startDate, 'D') || filterByFuture(point.endDate, 'D')),
-  [FilterType.PAST]: (points) => points.filter((point) => filterByPast(point.endDate, 'D') || filterByPast(point.startDate, 'D')),
+  [FilterType.FUTURE]: (points) => points.filter((point) => filterByFuture(point.startDate)),
+  [FilterType.PAST]: (points) => points.filter((point) => filterByPast(point.endDate)),
   [FilterType.PRESENT]: (points) => points.filter((point) => {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    const startDate = new Date(point.startDate);
-    startDate.setHours(0, 0, 0, 0);
-    const endDate = new Date(point.endDate);
-    endDate.setHours(0, 0, 0, 0);
-    return startDate <= currentDate && endDate >= currentDate;
+    const currentDate = dayjs().startOf('day');
+    const startDate = dayjs(point.startDate).startOf('day');
+    const endDate = dayjs(point.endDate).startOf('day');
+    return startDate.isSame(currentDate) || (startDate.isBefore(currentDate) && endDate.isAfter(currentDate));
   })
 };

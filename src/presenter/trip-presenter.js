@@ -10,7 +10,6 @@ import NewPointPresenter from './new-point-presenter';
 import LoadingView from '../view/loading-view';
 import UiBlocker from '../framework/ui-blocker/ui-blocker';
 import TripInfoView from '../view/trip-info-view';
-import MenuView from '../view/menu-view';
 
 class TripPresenter {
   #container = null;
@@ -22,7 +21,6 @@ class TripPresenter {
   #sortComponent = null;
   #loadingComponent = new LoadingView();
   #tripInfoComponent = null;
-  #menuComponent = new MenuView();
   #noPoint = null;
   #pointPresenter = new Map();
   #newPointPresenter = null;
@@ -191,10 +189,6 @@ class TripPresenter {
     render(this.#tripInfoComponent, this.#headerContainer, RenderPosition.AFTERBEGIN);
   }
 
-  #renderMenu() {
-    render(this.#menuComponent, this.#menuContainer);
-  }
-
   #renderBoard() {
     const points = this.points;
     const pointsCount = points.length;
@@ -206,10 +200,7 @@ class TripPresenter {
       this.#renderLoading();
       return;
     }
-    if (this.#filterType === FilterType.EVERYTHING) {
-      this.#renderTripInfo();
-    }
-    this.#renderMenu();
+    this.#renderTripInfo();
     this.#renderSort();
     render(this.#component, this.#container);
     this.#renderPoints(points);

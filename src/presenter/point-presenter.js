@@ -146,7 +146,7 @@ export default class PointPresenter{
       UserAction.UPDATE_POINT,
       UpdateType.MINOR,
       update);
-    this.#editPointComponent.reset(update);
+    // this.#editPointComponent.reset(update);
   };
 
   #handleDeleteClick = (point) => {
