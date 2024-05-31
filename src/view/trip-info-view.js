@@ -47,11 +47,18 @@ const createTripInfoTemplate = (points, destinations, offers) => {
   const startPoint = getStartPoint(points);
   const endPoint = getEndPoint(points);
 
+  const startMonth = humanizePointDate(startPoint.startDate, 'MMM');
+  const endMonth = humanizePointDate(endPoint.endDate, 'MMM');
+
+  const formattedDates = startMonth === endMonth
+    ? `${humanizePointDate(startPoint.startDate, 'MMM D')}&nbsp;&mdash;&nbsp;${humanizePointDate(endPoint.endDate, 'D')}`
+    : `${humanizePointDate(startPoint.startDate, 'MMM D')}&nbsp;&mdash;&nbsp;${humanizePointDate(endPoint.endDate, 'MMM D')}`;
+
   return(
     `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${getTripTitle(points, destinations, startPoint, endPoint)}</h1>
-        <p class="trip-info__dates">${humanizePointDate(startPoint.startDate, 'MMM D')}&nbsp;&mdash;&nbsp;${humanizePointDate(endPoint.endDate, 'MMM D')}</p>
+        <p class="trip-info__dates">${formattedDates}</p>
       </div>
       <p class="trip-info__cost">
         Total: &euro;&nbsp;<span class="trip-info__cost-value">${getTotalAmount(points, offers)}</span>

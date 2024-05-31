@@ -12,7 +12,7 @@ const BLANK_POINT = {
   destination: 1,
   startDate: dayjs(),
   endDate: dayjs(),
-  price: 100,
+  price: null,
   isFavorite: false,
   offers: []
 };
@@ -223,8 +223,9 @@ export default class EditingPointView extends AbstractStatefulView{
 
   #ChangePriceHandler = (event) => {
     event.preventDefault();
+    const inputPrice = Number(event.target.value);
     this.updateElement({
-      price: Number(event.target.value)
+      price: inputPrice >= 0 ? inputPrice : 0
     });
   };
 

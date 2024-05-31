@@ -1,56 +1,11 @@
 import AbstractView from '../framework/view/abstract-view';
 import {humanizePointDate} from '../utils/point';
-import {generateOffersByType} from '../mock/offer';
-import {generateDestination} from '../mock/destination';
 
 export const newPoint = (crNewPoint) => {
-  const {type, destination, startDate, endDate, price, offers} = crNewPoint;
+  const {type, startDate, endDate, price} = crNewPoint;
   const dateFrom = startDate !== null ? humanizePointDate(startDate, 'DD/MM/YY HH:mm') : '';
   const dateTo = endDate !== null ? humanizePointDate(endDate, 'DD/MM/YY HH:mm') : '';
-  const getDestination = destination.length !== 0 ? generateDestination.find((x) => x.id === destination) : '';
-  const city = getDestination !== '' ? getDestination.city : '';
-  const description = getDestination !== '' ? getDestination.description : '';
-  const destPhotos = getDestination !== '' ? getDestination.photos : '';
-  const generateOffers = (offer) => {
-    if (offers.find((x) => x === offer.id)) {
-      return(`<div class="event__offer-selector">
-                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" checked>
-                    <label class="event__offer-label" for="event-offer-luggage-1">
-                      <span class="event__offer-title">${offer.title}</span>
-                      &plus;&euro;&nbsp;
-                      <span class="event__offer-price">${offer.price}</span>
-                    </label>
-                  </div>`);
-    } else {
-      return(`<div class="event__offer-selector">
-                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage">
-                    <label class="event__offer-label" for="event-offer-luggage-1">
-                      <span class="event__offer-title">${offer.title}</span>
-                      &plus;&euro;&nbsp;
-                      <span class="event__offer-price">${offer.price}</span>
-                    </label>
-                  </div>`);
-    }
-  };
-  const createOffersTemplates = () => {
-    if (offers.length === 0) {
-      return '';
-    } else {
-      let offersTemplates = '';
-      const offersByType = generateOffersByType().find((x) => x.type === type);
-      for (let i = 0; i < offersByType.offers.length; i++) {
-        offersTemplates += generateOffers(offersByType.offers[i]);
-      }
-      return offersTemplates;
-    }
-  };
-  const createPhotosTemplates = () => {
-    let photosTemplates = '';
-    if (destPhotos !== ''){
-      photosTemplates = destPhotos.map((photo) => (`<img class="event__photo" src="${photo}" alt="Event photo">`)).join('');
-    }
-    return photosTemplates;
-  };
+
   return(`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -117,7 +72,7 @@ export const newPoint = (crNewPoint) => {
                     <label class="event__label  event__type-output" for="event-destination-1">
                       ${type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="" list="destination-list-1">
                     <datalist id="destination-list-1">
                       <option value="Amsterdam"></option>
                       <option value="Geneva"></option>
@@ -149,16 +104,14 @@ export const newPoint = (crNewPoint) => {
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
                     <div class="event__available-offers">
-                      ${createOffersTemplates()}
                     </div>
                   </section>
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">${description}</p>
+                    <p class="event__destination-description"></p>
                     <div class="event__photos-container">
                       <div class="event__photos-tape">
-                      ${createPhotosTemplates()}
                       </div>
                     </div>
                   </section>

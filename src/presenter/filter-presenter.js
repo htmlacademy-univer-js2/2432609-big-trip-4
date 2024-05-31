@@ -47,9 +47,9 @@ export default class FilterPresenter {
         count: filterByType[FilterType.EVERYTHING](points).length,
       },
       {
-        type: FilterType.PAST,
-        name: 'PAST',
-        count: filterByType[FilterType.PAST](points).length,
+        type: FilterType.FUTURE,
+        name: 'FUTURE',
+        count: filterByType[FilterType.FUTURE](points).length,
       },
       {
         type: FilterType.PRESENT,
@@ -57,9 +57,9 @@ export default class FilterPresenter {
         count: filterByType[FilterType.PRESENT](points).length,
       },
       {
-        type: FilterType.FUTURE,
-        name: 'FUTURE',
-        count: filterByType[FilterType.FUTURE](points).length,
+        type: FilterType.PAST,
+        name: 'PAST',
+        count: filterByType[FilterType.PAST](points).length,
       }
     ];
   }
