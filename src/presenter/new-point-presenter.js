@@ -12,12 +12,14 @@ export default class NewPointPresenter {
   #destinations = null;
   #offers = null;
   #isNewPoint = true;
-  constructor({pointListContainer, destinationsModel, offersModel, onFavoriteChange, onDestroy}) {
+  #onDataChange = null;
+  constructor({ pointListContainer, destinationsModel, offersModel, onFavoriteChange, onDestroy, onDataChange }) {
     this.#pointListContainer = pointListContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#handleFavoriteChange = onFavoriteChange;
     this.#handleDestroy = onDestroy;
+    this.#onDataChange = onDataChange;
   }
 
   init() {
@@ -81,6 +83,7 @@ export default class NewPointPresenter {
 
   #handleDeleteClick = () => {
     this.destroy();
+    this.#onDataChange(UpdateType.MINOR);
   };
 
   #escKeyDownHandler = (evt) => {
