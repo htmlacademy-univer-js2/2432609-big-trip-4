@@ -46,7 +46,8 @@ class TripPresenter {
       onFavoriteChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
       destinationsModel: this.#destinationsModel,
-      offersModel: this.#offersModel
+      offersModel: this.#offersModel,
+      onDataChange: this.#handleModelEvent,
     });
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filtersModel.addObserver(this.#handleModelEvent);
@@ -75,7 +76,6 @@ class TripPresenter {
   createPoint() {
     this.#currentSortType = SortType.DEFAULT;
     this.#filtersModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    render(this.#component, this.#container);
     this.#newPointPresenter.init();
   }
 
@@ -115,7 +115,7 @@ class TripPresenter {
     this.#uiBlocker.unblock();
   };
 
-  #handleModelEvent = (updateType, data) => {
+  #handleModelEvent = (updateType, data = null) => {
     switch (updateType) {
       case UpdateType.PATCH:
         this.#pointPresenter.get(data.id).init(data);

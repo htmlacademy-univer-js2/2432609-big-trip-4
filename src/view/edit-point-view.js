@@ -157,15 +157,17 @@ export default class EditingPointView extends AbstractStatefulView{
   #handleFormSubmit = null;
   #handleEditClick = null;
   #handleDeleteClick = null;
+  #handleRollUpClick = null;
   #destinations = null;
   #offers = null;
   #datepicker = null;
   #isNewPoint = null;
-  constructor({point = BLANK_POINT, onFormSubmit, onDeleteClick, destinations, offers, isNewPoint}){
+  constructor({ point = BLANK_POINT, onFormSubmit, onDeleteClick, destinations, offers, onRollUpClick, isNewPoint}){
     super();
     this.#point = point;
     this.#handleFormSubmit = onFormSubmit;
     this.#handleEditClick = onFormSubmit;
+    this.#handleRollUpClick = onRollUpClick;
     this.#destinations = destinations;
     this.#offers = offers;
     this.#isNewPoint = isNewPoint;
@@ -191,9 +193,9 @@ export default class EditingPointView extends AbstractStatefulView{
     this.#handleFormSubmit(EditingPointView.parseStateToPoint(this._state));
   };
 
-  #editClickHandler = (event) => {
+  #rollUpClickHandler = (event) => {
     event.preventDefault();
-    this.#handleEditClick(this.#point);
+    this.#handleRollUpClick(this.#point);
   };
 
   #deleteClickHandler = (event) => {
@@ -231,14 +233,7 @@ export default class EditingPointView extends AbstractStatefulView{
 
   #changeDestinationHandler = (event) => {
     event.preventDefault();
-    const inputDestinationName = event.target.value;
-    const destination = this.#destinations.find((dest) => dest.name === inputDestinationName);
-
-    if (!destination) {
-      event.target.value = this._state.destination.name;
-      return;
-    }
-
+    const destination = this.#destinations.find((dest) => dest.name === event.target.value);
     this.updateElement({
       destination: destination.id,
     });
@@ -316,7 +311,7 @@ export default class EditingPointView extends AbstractStatefulView{
   _restoreHandlers() {
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
     if (!this.#isNewPoint) {
-      this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+      this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpClickHandler);
     }
     this.element.querySelector('.event__type-list').addEventListener('change', this.#changeTypeHandler);
     this.element.querySelector('.event__available-offers').addEventListener('change', this.#changeOfferHandler);
