@@ -42,7 +42,7 @@ class TripPresenter {
     this.#filtersModel = filtersModel;
 
     this.#newPointPresenter = new NewPointPresenter({
-      pointListContainer: this.#container,
+      pointListContainer: this.#component.element,
       onFavoriteChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
       destinationsModel: this.#destinationsModel,
@@ -75,6 +75,7 @@ class TripPresenter {
   createPoint() {
     this.#currentSortType = SortType.DEFAULT;
     this.#filtersModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    render(this.#component, this.#container);
     this.#newPointPresenter.init();
   }
 
