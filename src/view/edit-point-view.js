@@ -241,7 +241,6 @@ export default class EditingPointView extends AbstractStatefulView{
 
     this.updateElement({
       destination: destination.id,
-      destinationData: destination
     });
   };
 
