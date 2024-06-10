@@ -27,7 +27,6 @@ class TripPresenter {
   #currentSortType = SortType.DEFAULT;
   #filterType = FilterType.EVERYTHING;
   #headerContainer = document.querySelector('.trip-main');
-  #menuContainer = this.#headerContainer.querySelector('.trip-controls__navigation');
   #isLoading = true;
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
