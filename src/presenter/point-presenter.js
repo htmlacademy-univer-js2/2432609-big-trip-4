@@ -43,7 +43,8 @@ export default class PointPresenter{
       onFormSubmit: this.#handleSubmitForm,
       onDeleteClick: this.#handleDeleteClick,
       destinations: this.#destinations,
-      offers: this.#offers
+      offers: this.#offers,
+      onRollUpClick: this.#replaceEditPointToPoint,
     });
 
     if (previousPointComponent === null || previousEditPointComponent === null){

@@ -27,7 +27,6 @@ class TripPresenter {
   #currentSortType = SortType.DEFAULT;
   #filterType = FilterType.EVERYTHING;
   #headerContainer = document.querySelector('.trip-main');
-  #menuContainer = this.#headerContainer.querySelector('.trip-controls__navigation');
   #isLoading = true;
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
@@ -76,6 +75,7 @@ class TripPresenter {
   createPoint() {
     this.#currentSortType = SortType.DEFAULT;
     this.#filtersModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    render(this.#component, this.#container);
     this.#newPointPresenter.init();
   }
 
