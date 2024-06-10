@@ -76,6 +76,7 @@ class TripPresenter {
   createPoint() {
     this.#currentSortType = SortType.DEFAULT;
     this.#filtersModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    render(this.#component, this.#container);
     this.#newPointPresenter.init();
   }
 
