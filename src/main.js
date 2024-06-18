@@ -44,20 +44,22 @@ const newPointButtonComponent = new NewPointButtonView({
 });
 
 function newPointCloseHandler() {
-  newPointButtonComponent.element.disabled = false;
+  newPointButtonComponent.enableButton();
 }
 
 function NewPointButtonClickHandler() {
   tripPresenter.createPoint();
-  newPointButtonComponent.element.disabled = true;
+  newPointButtonComponent.disableButton();
 }
+
+render(newPointButtonComponent, headerContainer);
 
 filterPresenter.init();
 tripPresenter.init();
 offersModel.init().finally(() => {
   destinationsModel.init().finally(() => {
-    pointsModel.init().finally(() => {
-      render(newPointButtonComponent, headerContainer);
+    pointsModel.init().then(() => {
+      newPointButtonComponent.enableButton();
     });
   });
 });
