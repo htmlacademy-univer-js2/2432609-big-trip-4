@@ -8,10 +8,19 @@ export default class NewPointButtonView extends AbstractView {
     super();
     this.#handleClick = onClick;
     this.element.addEventListener('click', this.#clickHandler);
+    this.disableButton();
   }
 
   get template() {
     return createNewPointButton();
+  }
+
+  disableButton() {
+    this.element.disabled = true;
+  }
+
+  enableButton() {
+    this.element.disabled = false;
   }
 
   #clickHandler = (event) => {

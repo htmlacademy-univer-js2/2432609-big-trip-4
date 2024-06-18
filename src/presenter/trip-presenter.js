@@ -28,6 +28,7 @@ class TripPresenter {
   #filterType = FilterType.EVERYTHING;
   #headerContainer = document.querySelector('.trip-main');
   #isLoading = true;
+  #isFetchError = false;
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
     upperLimit: TimeLimit.UPPER_LIMIT
@@ -129,6 +130,9 @@ class TripPresenter {
         this.#renderBoard();
         break;
       case UpdateType.INIT:
+        if (data && data.error) {
+          this.#isFetchError = true;
+        }
         this.#isLoading = false;
         remove(this.#loadingComponent);
         this.#renderBoard();
@@ -175,7 +179,15 @@ class TripPresenter {
 
   #renderNoPoints() {
     this.#noPoint = new NoPointView({
-      filterType: this.#filterType
+      filterType: this.#filterType,
+    });
+    render(this.#noPoint, this.#container, RenderPosition.AFTERBEGIN);
+  }
+
+  #renderFetchError() {
+    this.#noPoint = new NoPointView({
+      filterType: this.#filterType,
+      isFetchError: this.#isFetchError
     });
     render(this.#noPoint, this.#container, RenderPosition.AFTERBEGIN);
   }
@@ -193,6 +205,10 @@ class TripPresenter {
   #renderBoard() {
     const points = this.points;
     const pointsCount = points.length;
+    if (this.#isFetchError) {
+      this.#renderFetchError();
+      return;
+    }
     if (pointsCount === 0 && !this.#isLoading) {
       this.#renderNoPoints();
       return;
