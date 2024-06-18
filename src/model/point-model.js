@@ -21,7 +21,6 @@ export default class PointModel extends Observable{
     } catch (error){
       this.#points = [];
       this._notify(UpdateType.INIT, {error});
-      throw new Error('Points fetch error');
     }
   }
 
